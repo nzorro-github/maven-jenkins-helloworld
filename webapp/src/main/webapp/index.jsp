@@ -1,6 +1,7 @@
 <form action="action_page.php">
   <div class="container">
-    <h1>WELCOME! This is a Maven-Jenkins Hello World WebApp Deployment</h1>
+    <h1>WELCOME! </h1>
+    <h2> This is a Maven-Jenkins Hello World WebApp Deployment</h2>
     <p>Please fill in this form to create an account.</p>
     <hr>
      
@@ -31,7 +32,7 @@
     <p>Already have an account? <a href="#">Sign in</a>.</p>
   </div>
 
-   <h1> Thank you, Happy Learning </h1>
+   <h1> Thank you, Happy DevOps Learning </h1>
 
   
 </form>
