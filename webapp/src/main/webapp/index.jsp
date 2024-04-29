@@ -2,8 +2,8 @@
   <div class="container">
     <h1>WELCOME TO APACHE TOMCAT HELLOWORLD WEBAPP! </h1>
     <br>
-    <h2> This is a Maven-Jenkins-Docker WebApp Deployment #20 </h2>
-    <h2> Successfuly deployed to another docker container!</h2>	<br>
+    <h2> This is a Maven-Jenkins-Docker WebApp Deployment #21 </h2>
+    <h2> Successfuly deployed with ansible playbook </h2><br>
     <h1> !!!Thank you and Happy DevOps Learning!!! </h1>
 
   
