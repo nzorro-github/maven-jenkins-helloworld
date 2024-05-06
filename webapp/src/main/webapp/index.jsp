@@ -4,6 +4,7 @@
     <br>
     <h2> This is a Maven-Jenkins-Docker WebApp Deployment #70 </h2>
     <h2> Successfuly deployed with ansible playbook </h2><br>
+    <h3> This was also deployed to an EC2 instance Docker host via Terraform</h3>
     <h1> !!!Thank you and Happy DevOps Learning!!! </h1>
 
   
