@@ -11,13 +11,13 @@ pipeline {
     }
 
     parameters {
-        choice(name: 'BRANCH_NAME', choices: ['dev','staging','prod'], description: 'Branch to build')
+        choice(name: 'BRANCH', choices: ['dev','staging','prod'], description: 'Branch to build')
     }
 
     stages {
         stage ('Clone') {
             steps {
-                git branch: '${BRANCH_NAME}', url: "https://github.com/nzorro-github/maven-jenkins-helloworld.git"
+                git branch: '${BRANCH}', url: "https://github.com/nzorro-github/maven-jenkins-helloworld.git"
             }
         }
 
@@ -67,13 +67,13 @@ pipeline {
         stage('Build Image with Ansible'){
           steps {
             sshPublisher(publishers: [sshPublisherDesc(configName: 'Ansible-Server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''cd /home/parallels/ansible;
-ansible-playbook ansible-build-app.yml -e tag=v0.${BUILD_NUMBER};''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '//opt//docker', remoteDirectorySDF: false, removePrefix: 'webapp/target', sourceFiles: 'webapp/target/webapp.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+ansible-playbook ansible-build-app.yml -e tag=v0.${BUILD_NUMBER};''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '//opt//docker', remoteDirectorySDF: false, removePrefix: 'webapp/target', sourceFiles: 'webapp/target/webapp.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
           }
         }
 stage('Deploy with Ansible'){
           steps {
             sshPublisher(publishers: [sshPublisherDesc(configName: 'Ansible-Server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''cd /home/parallels/ansible;
-ansible-playbook ansible-deploy-kustomize.yml -e env=${BRANCH_NAME};''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '//opt//docker', remoteDirectorySDF: false, removePrefix: 'webapp/target', sourceFiles: 'webapp/target/webapp.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+ansible-playbook ansible-deploy-kustomize.yml -e env=${BRANCH};''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '//opt//docker', remoteDirectorySDF: false, removePrefix: 'webapp/target', sourceFiles: 'webapp/target/webapp.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
           }
         }
     }
