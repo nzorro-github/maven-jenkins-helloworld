@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment
+  namespace: staging
+spec:
+  selector:
+    matchLabels:
+      app: webapp
+      env: staging
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webapp
+        env: staging
+    spec:
+      containers:
+      - name: webapp-ctr
+        image: nzorro/webapp:latest
+        ports:
+        - containerPort: 8080

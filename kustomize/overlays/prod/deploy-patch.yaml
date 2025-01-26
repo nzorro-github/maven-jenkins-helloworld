@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment
+  namespace: prod
+spec:
+  selector:
+    matchLabels:
+      app: webapp
+      env: prod
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webapp
+        env: prod
+    spec:
+      containers:
+      - name: webapp-ctr
+        image: nzorro/webapp:latest
+        ports:
+        - containerPort: 8080
