@@ -14,9 +14,3 @@ spec:
       labels:
         app: webapp
         env: dev
-    spec:
-      containers:
-      - name: webapp-ctr
-        image: nzorro/webapp:latest
-        ports:
-        - containerPort: 8080

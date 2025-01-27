@@ -14,9 +14,3 @@ spec:
       labels:
         app: webapp
         env: staging
-    spec:
-      containers:
-      - name: webapp-ctr
-        image: nzorro/webapp:RC-0.37
-        ports:
-        - containerPort: 8080
