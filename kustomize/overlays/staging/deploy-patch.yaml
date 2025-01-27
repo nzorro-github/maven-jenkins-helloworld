@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: webapp-ctr
-        image: nzorro/webapp:latest
+        image: nzorro/webapp:RC-0.30
         ports:
         - containerPort: 8080
