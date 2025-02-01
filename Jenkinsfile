@@ -73,19 +73,22 @@ pipeline {
                 }
             }
         }
-        stage('Build Image with Ansible'){
+        stage('Build Image'){
             steps {
-                sshPublisher(publishers: [sshPublisherDesc(configName: 'Ansible-Server', transfers: [sshTransfer(cleanRemote: false, excludes: '', 
-                execCommand: "cd /home/parallels/ansible; ansible-playbook ansible-build-app.yml -e env=${BRANCH} -e tag=${env.COMMIT_SHA};", 
-execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '//opt//docker', remoteDirectorySDF: false, removePrefix: 'webapp/target', sourceFiles: 'webapp/target/webapp.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
-          }
+                sh 'cp -fr webapp/target/*.war .'
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com/nzorro/webapp', 'docker-login') {
+                        docker.build('nzorro/webapp').push("${env.COMMIT_SHA}")
+                    }
+                }
+            }
+          
         }
-stage('Deploy with Ansible'){
+        stage('Deploy with kustomize'){
             steps {
-                sshPublisher(publishers: [sshPublisherDesc(configName: 'Ansible-Server', transfers: [sshTransfer(cleanRemote: false, excludes: '', 
-                execCommand: "cd /home/parallels/ansible;ansible-playbook ansible-deploy-kustomize.yml -e env=${BRANCH} -e tag=${env.COMMIT_SHA};", 
-                execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '//opt//docker', remoteDirectorySDF: false, removePrefix: 'webapp/target', sourceFiles: 'webapp/target/webapp.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
-          }
+                sh "kubectl apply -k kustomize/overlays/${BRANCH}"
+                sh "kubectl set image deploy/webapp-deployment webapp-ctr=nzorro/webapp:${env.COMMIT_SHA} -n ${BRANCH}"
+            }
         }
     }
 }
