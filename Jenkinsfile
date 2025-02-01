@@ -10,9 +10,9 @@ pipeline {
       MAVEN_TOOL = "maven"
     }
 
-    parameters {
-        choice(name: 'BRANCH', choices: ['dev','staging','prod'], description: 'Branch to build')
-    }
+    // parameters {
+    //     choice(name: 'BRANCH', choices: ['dev','staging','prod'], description: 'Branch to build')
+    // }
 
     stages {
         stage ('Clone') {
