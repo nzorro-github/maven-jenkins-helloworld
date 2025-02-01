@@ -17,7 +17,7 @@ pipeline {
     stages {
         stage ('Clone') {
             steps {
-                git branch: '${BRANCH}', url: "https://github.com/nzorro-github/maven-jenkins-helloworld.git"
+                git branch: '${env.BRANCH_NAME}', url: "https://github.com/nzorro-github/maven-jenkins-helloworld.git"
             }
         }
 
@@ -86,8 +86,8 @@ pipeline {
         }
         stage('Deploy with kustomize'){
             steps {
-                sh "kubectl apply -k kustomize/overlays/${BRANCH}"
-                sh "kubectl set image deploy/webapp-deployment webapp-ctr=nzorro/webapp:${env.COMMIT_SHA} -n ${BRANCH}"
+                sh "kubectl apply -k kustomize/overlays/${env.BRANCH_NAME}"
+                sh "kubectl set image deploy/webapp-deployment webapp-ctr=nzorro/webapp:${env.COMMIT_SHA} -n ${env.BRANCH_NAME}"
             }
         }
     }
