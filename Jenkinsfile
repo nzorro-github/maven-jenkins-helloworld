@@ -18,7 +18,7 @@ pipeline {
         stage ('Clone') {
             steps {
                 sh 'printenv'
-                git branch: '${env.GIT_BRANCH}', url: "https://github.com/nzorro-github/maven-jenkins-helloworld.git"
+                git branch: "${env.GIT_BRANCH}", url: "https://github.com/nzorro-github/maven-jenkins-helloworld.git"
             }
         }
 
